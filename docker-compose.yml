@@ -1,6 +1,12 @@
 version: '2'
 services:
   cas:
-    build: .
+    build:
+      context: .
+      args:
+        USER: ${USER_NAME:-casuser}
+        PASSWORD: ${PASSWORD:-Mellon}
+    container_name: cas
     ports:
-     - "8443:8443"
+      - "8443:8443"
+    restart: unless-stopped

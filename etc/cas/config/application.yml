@@ -1,2 +1,7 @@
 info:
   description: CAS Configuration
+
+cas:
+  authn:
+    accept:
+      users: user_name::password

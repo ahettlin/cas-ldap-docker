@@ -1,21 +1,19 @@
-#FROM adoptopenjdk/openjdk11:alpine-slim as buildwar
-FROM openjdk:11-jre-slim as buildwar
-MAINTAINER Chris Peck <crpeck@wm.edu>
+#FROM eclipse-temurin:11-alpine as buildwar
+FROM eclipse-temurin:11-alpine as buildwar
 RUN cd /tmp \
-  && apt-get update \
-  && apt-get -y install git \
-  && git clone -b master --single-branch https://github.com/apereo/cas-overlay-template.git cas-overlay \
+  && apk update \
+  && apk upgrade \
+  && apk add --no-cache git \
+  && git clone -b 6.6 --single-branch https://github.com/apereo/cas-overlay-template.git cas-overlay \
   && mkdir -p /tmp/cas-overlay/src/main/webapp
 WORKDIR /tmp/cas-overlay
 COPY src/ /tmp/cas-overlay/src
 RUN  ./gradlew clean build
 
-#FROM adoptopenjdk/openjdk11:alpine-slim
-FROM openjdk:11-jre-slim
-MAINTAINER Chris Peck <crpeck@wm.edu>
+#FROM eclipse-temurin:11-alpine
+FROM eclipse-temurin:11-alpine
 RUN mkdir /etc/cas
-FROM openjdk:11-jre-slim
-MAINTAINER Chris Peck <crpeck@wm.edu>
+FROM eclipse-temurin:11-alpine
 RUN mkdir /etc/cas \
   && cd /etc/cas \
   && keytool -genkey -noprompt -keystore thekeystore -storepass changeit -keypass changeit -validity 3650 \
@@ -28,8 +26,14 @@ WORKDIR /root
 COPY --from=buildwar /tmp/cas-overlay/build/libs/cas.war .
 COPY etc/cas /etc/cas
 
+ARG USER
+ARG PASSWORD
+WORKDIR /etc/cas/config
+RUN   sed -i "s|user_name|$USER|g" application.yml
+RUN   sed -i "s|password|$PASSWORD|g" application.yml
+
 EXPOSE 8443
-CMD [ "/usr/bin/java", "-jar", "/root/cas.war" ]
+CMD [ "java", "-jar", "/root/cas.war" ]
 
 #
 #COPY etc/cas /etc/cas
