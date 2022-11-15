@@ -17,13 +17,13 @@ Uses gradle to build CAS 6.x
 To use
 =====
 * To build & run CAS in Docker type:
-```docker-compose up --force-recreate```
+```docker-compose up --force-recreate```. If you have changed anything in the Dockerfile, application.yml, or .env files, use this instead ```docker-compose up --force-recreate --build cas```. If you want to be able to close the terminal and keep the container running, add the ```-d``` argument.
 
 * Open up a page at https://localhost:8443/cas/login and login as:
-  * user: casuser
-  * password: Mellon
+  * user: ${username from .env}
+  * password: ${password from .env}
 
-* Type ctrl-c to exit, then type this to cleanup:
+* Type ctrl-c to exit (if not using ```-d```), then type this to cleanup:
 ```docker-compose down --rmi all```
 
 Notes
