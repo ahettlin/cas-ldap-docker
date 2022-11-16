@@ -4,4 +4,14 @@ info:
 cas:
   authn:
     accept:
-      users: user_name::password
+      enabled: false
+    ldap[0]:
+      bind-dn: cn=admin,dc=example,dc=org
+      bind-credential: ldap_admin_password
+      base-dn: ou=people,dc=example,dc=org
+      search-filter: uid={user}
+      password-encoder:
+        type: NONE
+      ldap-url: ldap://openldap:ldap_port
+      use-start-tls: false
+      type: AUTHENTICATED
