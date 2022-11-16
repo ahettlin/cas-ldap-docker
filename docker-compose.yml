@@ -1,11 +1,7 @@
 version: '2'
 services:
   cas:
-    build:
-      context: .
-      args:
-        USER: ${USER_NAME:-casuser}
-        PASSWORD: ${PASSWORD:-Mellon}
+    build: .
     container_name: cas
     ports:
       - "8443:8443"
