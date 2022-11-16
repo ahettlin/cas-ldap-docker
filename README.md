@@ -1,4 +1,4 @@
-CAS Docker Overlay
+CAS with LDAP in Docker
 ==================
 Uses gradle to build CAS 6.x 
 
