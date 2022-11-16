@@ -24,5 +24,11 @@ WORKDIR /root
 COPY --from=buildwar /tmp/cas-overlay/build/libs/cas.war .
 COPY etc/cas /etc/cas
 
+ARG LDAP_PORT
+ARG LDAP_ADMIN_PASSWORD
+WORKDIR /etc/cas/config
+RUN   sed -i "s|ldap_port|$LDAP_PORT|g" application.yml
+RUN   sed -i "s|ldap_admin_password|$LDAP_ADMIN_PASSWORD|g" application.yml
+
 EXPOSE 8443
 CMD [ "java", "-jar", "/root/cas.war", "-Dcas.log.level=debug" ]

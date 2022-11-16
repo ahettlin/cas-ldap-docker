@@ -7,11 +7,11 @@ cas:
       enabled: false
     ldap[0]:
       bind-dn: cn=admin,dc=example,dc=org
-      bind-credential: admin
+      bind-credential: ldap_admin_password
       base-dn: ou=people,dc=example,dc=org
       search-filter: uid={user}
       password-encoder:
         type: NONE
-      ldap-url: ldap://host.docker.internal:389
+      ldap-url: ldap://openldap:ldap_port
       use-start-tls: false
       type: AUTHENTICATED

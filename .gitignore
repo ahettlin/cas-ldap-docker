@@ -1,2 +1,3 @@
 /etc/cas/config/certificate.pem
 docker-compose.*.yml
+ldap-storage
