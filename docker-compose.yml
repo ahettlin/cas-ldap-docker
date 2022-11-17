@@ -48,6 +48,8 @@ services:
       - ACCEPT_WEAK_PASSWORDS=TRUE
       - USERNAME_REGEX=^[a-zA-Z0-9._-]{3,32}$
       - SERVER_HOSTNAME=localhost:${LDAP_UI_PORT:-18080}
+      - LDAP_ACCOUNT_ADDITIONAL_ATTRIBUTES=cn
+      - LDAP_ACCOUNT_ATTRIBUTE=cn
     depends_on:
       - openldap
     ports:
